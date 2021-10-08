@@ -1,0 +1,27 @@
+body, html {
+    background: white;
+    overflow-x: hidden;
+}
+
+.navbar {
+    background: rgb(241, 241, 241);
+}
+
+.orange {
+    color: #dfa300;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    padding: 20px;
+    background: #ffc107;
+    width: 100%;
+    color: black;
+}
+
+.logo {
+    color: #dfa300;
+    font-weight: bold;
+    width: 100%;
+}
