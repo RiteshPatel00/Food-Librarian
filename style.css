@@ -1,19 +1,17 @@
 body, html {
-    background: white;
-    overflow-x: hidden;
+    width: 100%;
+    min-height: 100vh;
+    background-color: white;
+    overflow-x :hidden;
 }
 
 .navbar {
     background: rgb(241, 241, 241);
 }
 
-.orange {
-    color: #dfa300;
-}
-
 .footer {
-    position: absolute;
-    bottom: 0;
+    position: fixed;
+    bottom: 0px;
     padding: 20px;
     background: #ffc107;
     width: 100%;
@@ -24,4 +22,17 @@ body, html {
     color: #dfa300;
     font-weight: bold;
     width: 100%;
+}
+
+.fa-star {
+    color: #dfa300;
+}
+
+.fa-star-half {
+    color: #dfa300;
+}
+
+.results-container {
+    overflow-y: scroll;
+    max-height: 90vh;
 }
