@@ -1,6 +1,6 @@
 # Review-Website
 
-## Group Submission Form
+### Group Submission Form
 
 Group name: Food Librarian
 
