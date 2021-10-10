@@ -30,7 +30,7 @@
   <!--Navigation bar used from Bootstrap that has 4 links-->
   <nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
     <!--Contains the branding of the website on the navigation bar-->
-    <a class="navbar-brand" href="#">Food Librarian</a>
+    <a class="navbar-brand" href="search.html">Food Librarian</a>
     <!--Navigation toggler allows the links on the nav bar to collapse, implemented as a button when the screen size reaches a certain dimension-->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
       <span class="navbar-toggler-icon"></span>
@@ -39,13 +39,13 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <a class="nav-link" href="#">Add Restaurant</a>
+          <a class="nav-link" href="submission.html">Add Restaurant</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Search</a>
+          <a class="nav-link" href="search.html">Search</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Sign Up</a>
+          <a class="nav-link" href="registration.html">Sign Up</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">About</a>
@@ -64,14 +64,16 @@
   <!--Creating a Bootstrap row that will be for the search bar-->
   <div class="row justify-content-center mt-5">
     <div class="col-11 col-md-7 col-lg-4 text-center">
-      <div class="input-group mb-3">
-        <!--Bootstrap input type that takes in a restaurant name-->
-        <input type="text" class="form-control p-3 bg-light" placeholder="Restaurant Name">
-        <!-- Bootstrap button for searching the input -->
-        <div class="input-group-append">
-          <button class="btn btn-warning p-3" type="button">Search</button>
-        </div>
-      </div>
+      <form action="results_sample.html" class="d-block">
+        <div class="input-group mb-3">
+            <!--Bootstrap input type that takes in a restaurant name-->
+            <input type="text" class="form-control p-3 bg-light" placeholder="Restaurant Name">
+            <!-- Bootstrap button for searching the input -->
+            <div class="input-group-append">
+                <button class="btn btn-warning p-3" type="submit">Search</button>
+            </div>
+          </div>
+      </form>
     </div>
   </div>
 
