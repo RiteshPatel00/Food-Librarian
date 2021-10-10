@@ -1,39 +1,47 @@
 body, html {
-    width: 100%;
-    min-height: 100vh;
-    background-color: white;
-    overflow-x :hidden;
-    padding-bottom: 50px;
+  width: 100%;
+  /* Depending on the viewport, the min-height will be 100% of that viewport */
+  min-height: 100vh;
+  background-color: white;
+  /* The overflow is clipped, and the rest of the content will be invisible on the left and right sides of the website*/
+  overflow-x: hidden;
+  padding-bottom: 50px;
 }
 
+/* Grabbing the navbar for each of our HTML files */
 .navbar {
-    background: rgb(241, 241, 241);
+  background: rgb(241, 241, 241);
 }
 
 .footer {
-    position: fixed;
-    bottom: 0px;
-    padding: 20px;
-    background: #ffc107;
-    width: 100%;
-    color: black;
+  /* Fixed position so that it never moves from that position on the webpage */
+  position: fixed;
+  bottom: 0px;
+  padding: 20px;
+  background: #ffc107;
+  width: 100%;
+  color: black;
 }
 
 .logo {
-    color: #dfa300;
-    font-weight: bold;
-    width: 100%;
+  color: #dfa300;
+  font-weight: bold;
+  width: 100%;
 }
 
+/* Targeting the FontAwesome stars in order to change their colors to match our color palette */
 .fa-star {
-    color: #dfa300;
+  color: #dfa300;
 }
 
 .fa-star-half {
-    color: #dfa300;
+  color: #dfa300;
 }
 
+/* Container for the results page */
 .results-container {
-    overflow-y: scroll;
-    max-height: 90vh;
+  /* Want to be able to scroll on this container so we set the overflow from top to bottom with the scroll property */
+  overflow-y: scroll;
+  /* Setting the max height to be 90% of the specific viewport whether on mobile or desktop */
+  max-height: 90vh;
 }
