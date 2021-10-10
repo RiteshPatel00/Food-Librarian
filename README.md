@@ -14,6 +14,8 @@ Mac Email: 2.  bhatts39@mcmaster.ca
 
 IP Address: http://3.22.93.253/
 
+Github URL: https://github.com/RiteshPatel00/Food-Librarian
+
 ### Add-on 1 Completed
 Added in meta tags and microdata for respective HTML pages
 
