@@ -6,10 +6,10 @@ Group name: Food Librarian
 
 Name 1: Ritesh Patel 
 Student Number 1: 400184627
-Mac Email: pater16@mcmaster.ca
+Mac Email 1: pater16@mcmaster.ca
 
-Name 1: Sunny Bhatt
-Student Number 1: 400190373
+Name 2: Sunny Bhatt
+Student Number 2: 400190373
 Mac Email: 2.  bhatts39@mcmaster.ca
 
 IP Address: http://3.22.93.253/
