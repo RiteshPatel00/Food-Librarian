@@ -45,3 +45,7 @@ body, html {
   /* Setting the max height to be 90% of the specific viewport whether on mobile or desktop */
   max-height: 90vh;
 }
+
+.location-button {
+  border-radius: 0px 5px 5px 0px !important;
+}
