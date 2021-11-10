@@ -98,8 +98,11 @@
     </div>
 
     <!-- Image of map that will be made interactive -->
-    <div class="card col-12 col-md-10 col-lg-7 mx-auto mt-4">
-      <img src="images/papa-johns-map2.png" class="w-100 rounded" alt="Papa John's Location" />
+    <div class="card col-12 col-md-10 col-lg-7 mx-auto mt-4" style="height: 50vh"> 
+        <div id="map"></div>
+      </div>
+      
+      <!-- <img src="images/papa-johns-map2.png" class="w-100 rounded" alt="Papa John's Location" /> -->
     </div>
 
     <!-- ================================================================================================================================================ -->
@@ -184,10 +187,54 @@
     &copy; 2021 FoodLibrarian, Inc
   </div>
 
+  <script>
+    let map;
+    function initMap() {
+      const papaJohns = { lat: 43.251040, lng: -79.815610 };
+      map = new google.maps.Map(document.getElementById("map"), {
+        center: papaJohns,
+        zoom: 11,
+      });
+      // The marker, positioned at Papa Johns 1
+      const contentString =
+        '<div id="content">' +
+        '<div id="siteNotice">' +
+        "</div>" +
+        '<a href="individual_sample.html"><h2 id="firstHeading" class="firstHeading">Papa John\'s Pizza</h2></a>' +
+        '<h4><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half"></i></h4>' +
+        '<div id="bodyContent">' +
+        '<h5><p>1212 Upper Wentworth Street, Hamilton ON<br />(905) 524-1441</p></h5>' +
+        "</div>" +
+        "</div>";
+      const infowindow = new google.maps.InfoWindow({
+        content: contentString,
+      });
+      
+      const marker1 = new google.maps.Marker({
+        position: papaJohns,
+        map: map,
+        title: "Papa John's Pizza",
+      });
+
+      marker1.addListener("click", () => {
+        infowindow.open({
+          anchor: marker1,
+          map,
+          shouldFocus: false,
+        });
+      });
+    }
+
+
+  </script>
   <!--Accessory script tags in order to make sure that Bootstrap is working properly-->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  <!--Google Maps API-->
+  <script async
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQKZXrOfu7qpxSSC_nxwKypHXJCDpzdzc&callback=initMap">
+  </script>
 </body>
 
 </html>
