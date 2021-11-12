@@ -46,10 +46,13 @@ body, html {
   max-height: 90vh;
 }
 
+/* Selecting the location button to add some styling */
 .location-button {
+  /* Changing the radius of our button to be visually better */
   border-radius: 0px 5px 5px 0px !important;
 }
 
+/* Making the map's height responsive by selecting it's id */
 #map {
   height: 100%;
 }
