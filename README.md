@@ -12,7 +12,7 @@ Name 2: Sunny Bhatt
 Student Number 2: 400190373
 Mac Email: 2.  bhatts39@mcmaster.ca
 
-IP Address: http://3.22.93.253/
+URL: https://riteshpatel00.github.io/Food-Librarian/
 
 Github URL: https://github.com/RiteshPatel00/Food-Librarian
 

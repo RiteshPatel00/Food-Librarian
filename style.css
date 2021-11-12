@@ -56,3 +56,19 @@ body, html {
 #map {
   height: 100%;
 }
+
+.animation {
+  transition: all 500ms ease;
+ }
+
+ .animation:hover {
+  transform: scale(1.2);
+}
+
+.button-animation{
+  transition: all 500ms ease;
+}
+
+.button-animation:hover {
+  box-shadow:inset 1000px 0 10px rgba(0,0,0,0.4);
+}
