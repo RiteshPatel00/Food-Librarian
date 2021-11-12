@@ -4,7 +4,7 @@ function formValidation(e){
   var email = document.getElementById("email").value;
   var password = document.getElementById("password").value;
   var confirmPassword = document.getElementById("confirmPassword").value;
-  console.log("Im called");
+
   if (userName.length >= 50 || userName.length <= 5){
     e.preventDefault();
     document.getElementById("userName").value = '';
