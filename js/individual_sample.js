@@ -1,4 +1,4 @@
-// Declaring variable
+// Declaring map variable
 let map;
 
 // Creating a function that will be called to initalize our map when the api is called
