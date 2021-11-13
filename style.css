@@ -57,18 +57,24 @@ body, html {
   height: 100%;
 }
 
+/* Creating an increase animation for elements to emphasize when an element is hovered on */
 .animation {
+  /* Setting time of 500 ms for animation to play out for all of the property and setting it to ease into the animation  */
   transition: all 500ms ease;
  }
 
  .animation:hover {
+   /* Transform attribute has a change in scale to give the animation of resizing when hovering on the element */
   transform: scale(1.2);
 }
-
+/* Creating sepearte animation for button */
 .button-animation{
+  /* Using the time attribute to set the length of our animation */
   transition: all 500ms ease;
 }
 
+
 .button-animation:hover {
+  /* Using a box shadow to simulate a fading animation when hovering over a button */
   box-shadow:inset 1000px 0 10px rgba(0,0,0,0.4);
 }

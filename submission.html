@@ -28,6 +28,7 @@
   <!--Navigation bar used from Bootstrap that has 4 links-->
   <nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
     <!--Contains the branding of the website on the navigation bar-->
+    <!-- Also adding in animation class to use to animate the specific HTML language -->
     <a class="navbar-brand animation" href="search.html">Food Librarian</a>
     <!--Navigation toggler allows the links on the nav bar to collapse, implemented as a button when the screen size reaches a certain dimension-->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
@@ -68,6 +69,7 @@
           <img class="logo mt-3 mb-4" src="images/logo.png" alt="FoodLibrarian" />
 
           <!-- HTML form that has 5 fields, for the restaurant's name, phone number, address and it's longitude and latitude values -->
+          <!-- Setting `required` attribute to form groups in order to perform form validation using pure HTML -->
           <form>
             <div class="form-group">
               <input type="text" class="form-control mb-3" placeholder="Restaurant name" required>
@@ -81,6 +83,7 @@
             <div class="input-group">
               <input type="number" step="any" class="form-control" placeholder="Latitude" id="latitude" required>
               <input type="number" step="any" class="form-control" placeholder="Longitude" id="longitude" required>
+              <!-- Adding button-animation to make fading animation on button -->
               <button onClick="getLocation()" class="btn btn-primary p-3 location-button button-animation" type="button"><i class="fas fa-map-marker-alt"></i></button>
             </div>
             <!-- Button to upload an image of the restaurant using an input tag with the type being a file -->
@@ -88,6 +91,7 @@
               <b class="text-dark">Image of restaurant: </b><input type="file" class="px-3">
             </div>
             <!-- Bootstrap button that submits the user's restaurant information -->
+            <!-- Adding button-animation to make fading animation on button -->
             <button type="submit" class="btn btn-primary w-100 mt-3 button-animation">Submit</button>
           </form>
         </div>
@@ -104,6 +108,8 @@
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  
+  <!-- Importing the appropriate javascript for the page --> 
   <script src="js/submission.js"></script>
 </body>
 
