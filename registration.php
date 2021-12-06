@@ -53,7 +53,7 @@
           <a class="nav-link animation" href="registration.html">Sign Up</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link animation" href="#">About</a>
+          <a class="nav-link animation" href="sign_in.html">Sign In</a>
         </li>
       </ul>
     </div>
