@@ -2,7 +2,7 @@
   require('connect.php');
   session_start();
   if (isset($_SESSION['username'])) {
-    header("Location: sign_in.php");
+    header("Location: index.php");
   }
 ?>
 <!DOCTYPE html>
@@ -76,8 +76,8 @@
             <div class="alert alert-success" role="alert">
               Account successfully created!
             </div>
-          <?php elseif($_GET['success'] == 'false'); ?>
-            <div class="alert alert-success" role="alert">
+          <?php elseif($_GET['success'] == 'false') : ?>
+            <div class="alert alert-danger" role="alert">
               There was an error creating your account.
             </div>
           <?php endif; ?>

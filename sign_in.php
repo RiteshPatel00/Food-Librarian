@@ -63,14 +63,20 @@
           <!-- Websites' logo that contains a path to the image of the logo in our images folder -->
           <img class="logo mt-3 mb-4" src="images/logo.png" alt="FoodLibrarian" />
 
+          <?php if($_GET['success'] == 'false') : ?>
+            <div class="alert alert-danger" role="alert">
+              Invalid username or password.
+            </div>
+          <?php endif; ?>
+
           <!-- HTML form that has 4 fields, for the user's email, username, password and confirmation of password  -->
           <!-- Setting id's for each input field in order to perform form validation which returns a function on submit -->
-          <form id="myForm" onsubmit="return formValidation(event)">
+          <form id="myForm" onsubmit="return formValidation(event)" method="POST" action="php/login.php">
             <div class="form-group">
-              <input id="userName" type="text" class="form-control mb-3" placeholder="Enter username">
+              <input id="userName" name="username" type="text" class="form-control mb-3" placeholder="Enter username">
             </div>
             <div class="form-group">
-              <input id="password" type="password" class="form-control mb-3" placeholder="Password">
+              <input id="password" name="password" type="password" class="form-control mb-3" placeholder="Password">
             </div>
 
             <!-- Bootstrap button that submits the user's registration information -->
