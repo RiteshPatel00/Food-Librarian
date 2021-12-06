@@ -1,3 +1,10 @@
+<?php
+  require('connect.php');
+  session_start();
+  if (isset($_SESSION['username'])) {
+    header("Location: sign_in.php");
+  }
+?>
 <!DOCTYPE html>
 
 <html lang="en" dir="ltr">
@@ -65,15 +72,24 @@
 
           <!-- HTML form that has 4 fields, for the user's email, username, password and confirmation of password  -->
           <!-- Setting id's for each input field in order to perform form validation which returns a function on submit -->
-          <form id="myForm" onsubmit="return formValidation(event)">
+          <?php if($_GET['success'] == 'true') : ?>
+            <div class="alert alert-success" role="alert">
+              Account successfully created!
+            </div>
+          <?php elseif($_GET['success'] == 'false'); ?>
+            <div class="alert alert-success" role="alert">
+              There was an error creating your account.
+            </div>
+          <?php endif; ?>
+          <form id="myForm" onsubmit="return formValidation(event)" method="POST" action="php/register.php">
             <div class="form-group">
-              <input id="userName" type="text" class="form-control mb-3" placeholder="Enter username">
+              <input id="userName" name="username" type="text" class="form-control mb-3" placeholder="Enter username">
             </div>
             <div class="form-group">
-              <input id="email" type="email" class="form-control mb-3" placeholder="Enter email">
+              <input id="email" name="email" type="email" class="form-control mb-3" placeholder="Enter email">
             </div>
             <div class="form-group">
-              <input id="password" type="password" class="form-control mb-3" placeholder="Password">
+              <input id="password" name="password" type="password" class="form-control mb-3" placeholder="Password">
             </div>
             <div class="form-group">
               <input id="confirmPassword" type="password" class="form-control" placeholder="Confirm Password">
