@@ -9,19 +9,28 @@ if (!isset($_GET['id'])) {
     die("Restaurant ID not given");
 }
 $sql = "SELECT * FROM restaurants WHERE id=?";
-    try {
-      $restaurants = $db->prepare($sql);
-      $restaurants->execute([$_GET['id']]);
-      $restaurants = $restaurants->fetchAll();
-      if (sizeof($restaurants) == 0) {
+try {
+    $restaurants = $db->prepare($sql);
+    $restaurants->execute([$_GET['id']]);
+    $restaurants = $restaurants->fetchAll();
+    if (sizeof($restaurants) == 0) {
         die("Invalid restaurant ID");
-      } else {
-        $restaurant = $restaurants[0];
-      }
-    } catch (Exception $e) {
-        die("Invalid restaurant ID");
+    } else {
+    $restaurant = $restaurants[0];
     }
-
+} catch (Exception $e) {
+    die("Invalid restaurant ID");
+}
+$sql = "SELECT * FROM reviews WHERE restaurant_id=?";
+$reviews = $db->prepare($sql);
+$reviews->execute([$restaurant['id']]);
+$reviews = $reviews->fetchAll();
+if (sizeof($reviews) > 0) {
+    $totalRating = array_sum(array_reduce($reviews, function($sum, $review) { return $sum += $review['rating']; }, 0));
+    $averageRating = ceil($totalRating)/sizeof($reviews);
+} else {
+    $averageRating = 0;
+}
 require('navbar.php'); 
 ?>
 
@@ -39,7 +48,9 @@ require('navbar.php');
         <h2 class="card-title">
         <?php echo $restaurant['name'] ?><span class="px-1"></span>
           <!-- Link from FontAwesome that is included in the head of our HTML doc that generates an image of a star and/or half a star to indicate a rating on the restaurant -->
-          <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half"></i>
+            <?php for ($i = 0; $i < $averageRating; $i++) : ?>
+                <i class="fas fa-star"></i>
+            <?php endfor; ?> 
         </h2>
         <hr>
         <!-- Added microdata on the longitude and latitude of the restaurant specifically -->
@@ -66,72 +77,26 @@ require('navbar.php');
     <!-- Constructing the specific column and rows using Bootstraps grid system so that it can contain the user reviews -->
     <div class="col-12 col-md-10 col-lg-9 mx-auto mt-4">
       <div class="row row-cols-1 row-cols-md-2 g-4">
+        <?php foreach ($reviews as $review) : ?>
         <div class="col">
           <!-- Microdata added in this div to grab information about the review -->
           <div class="card" itemprop="review" itemscope itemtype="https://schema.org/Review">
             <div class="card-body">
               <h5 class="card-title">
-                "Very Good"<span class="px-1"></span>
+                "<?php echo $review['title']; ?>"<span class="px-1"></span>
                 <!-- Link from FontAwesome that is included in the head of our HTML doc that generates an image of a star and/or half a star to indicate a rating on the restaurant -->
-                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-              </h5>
+                <?php for ($i = 0; $i < $review['rating']; $i++) : ?>
+                    <i class="fas fa-star"></i>
+                <?php endfor; ?> 
+            </h5>
               <!-- Microdata from the review's name and the review body is grabbed as well as the date published -->
-              <p class="card-text text-muted"> <span itemprop="name">John Appleseed</span>-<span itemprop="datePublished" content="2021-01-08">January 8, 2021</span></p>
-              <p class="card-text" itemprop="reviewBody">Pizza was cooked perfectly. Toppings are high quality and fresh. Delivery was fast. I recommend the fiery buffalo chicken pizza and the philly cheese steak. My favorite pizza in town!</p>
+              <p class="card-text text-muted"> <span itemprop="name"><?php echo $review['name']; ?></span>-<span itemprop="datePublished" content="2021-01-08"><?php echo $review['date']; ?></span></p>
+              <p class="card-text" itemprop="reviewBody"><?php echo $review['description']; ?></p>
             </div>
           </div>
         </div>
-
-        <div class="col">
-          <!-- Microdata added in this div to grab information about the review -->
-          <div class="card" itemprop="review" itemscope itemtype="https://schema.org/Review">
-            <div class="card-body">
-              <h5 class="card-title">
-                "Best pizza ever!"<span class="px-1"></span>
-                <!-- Link from FontAwesome that is included in the head of our HTML doc that generates an image of a star and/or half a star to indicate a rating on the restaurant -->
-                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-              </h5>
-              <!-- Microdata from the review's name and the review body is grabbed as well as the date published -->
-              <p class="card-text text-muted"><span itemprop="name">Jack Hellewell</span>-<span itemprop="datePublished" content="2021-01-01">January 1, 2021</span></p>
-              <p class="card-text" itemprop="reviewBody">I am impressed! The delivery guy placed my food in front of my door on the floor above an extra empty pizza box and plastic bag. No other food delivery place does this</p>
-            </div>
-          </div>
+        <?php endforeach; ?>
         </div>
-
-        <div class="col">
-          <div class="card" itemprop="review" itemscope itemtype="https://schema.org/Review">
-            <div class="card-body">
-              <h5 class="card-title">
-                "Needs improvement"<span class="px-1"></span>
-                <!-- Link from FontAwesome that is included in the head of our HTML doc that generates an image of a star and/or half a star to indicate a rating on the restaurant -->
-                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-              </h5>
-              <!-- Microdata from the review's name and the review body is grabbed as well as the date published -->
-              <p class="card-text text-muted"><span itemprop="name">Jimmy Appleseed</span>-<span itemprop="datePublished" content="2021-01-10">January 10, 2021</span></p>
-              <p class="card-text" itemprop="reviewBody">The pizza is rarely consistent quality. Don’t bother to pay for extra or double cheese they will just put the same amount. If you can see tomato sauce through the cheese, it isn’t extra cheese.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col">
-          <div class="card" itemprop="review" itemscope itemtype="https://schema.org/Review">
-            <div class="card-body">
-              <h5 class="card-title">
-                "Disgusting"<span class="px-1"></span>
-                <!-- Link from FontAwesome that is included in the head of our HTML doc that generates an image of a star and/or half a star to indicate a rating on the restaurant -->
-                <i class="fas fa-star"></i>
-              </h5>
-              <!-- Microdata from the review's name and the review body is grabbed as well as the date published -->
-              <p class="card-text text-muted"><span itemprop="name">John Doe</span>-<span itemprop="datePublished" content="2021-01-22">January 22, 2021</span></p>
-              <p class="card-text" itemprop="reviewBody">Ordered the bbq chicken bacon pizza with green peppers. The whole pizza maybe had one strip of bacon on it. Barely any chicken and only 2 slices had green peppers.</p>
-            </div>
-          </div>
-        </div>
-        <!-- ================================================================================================================================================ -->
-        <!--End of review cards section-->
-        <!-- ================================================================================================================================================ -->
-      </div>
     </div>
 
 
