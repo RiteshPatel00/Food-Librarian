@@ -2,7 +2,13 @@
 
 <html lang="en" dir="ltr">
 
-<?php require('navbar.php'); ?>
+<?php 
+require('connect.php');
+if (!empty($_GET['name']) && !empty($_GET['rating'])) {
+    $sql = "SELECT * FROM restaurants WHERE"
+}
+require('navbar.php'); 
+?>
 
 <body>
 

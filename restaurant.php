@@ -26,7 +26,7 @@ $reviews = $db->prepare($sql);
 $reviews->execute([$restaurant['id']]);
 $reviews = $reviews->fetchAll();
 if (sizeof($reviews) > 0) {
-    $totalRating = array_sum(array_reduce($reviews, function($sum, $review) { return $sum += $review['rating']; }, 0));
+    $totalRating = array_reduce($reviews, function($sum, $review) { return $sum += $review['rating']; }, 0);
     $averageRating = ceil($totalRating)/sizeof($reviews);
 } else {
     $averageRating = 0;
@@ -46,7 +46,7 @@ require('navbar.php');
         <!-- Picture of the specific restaurant -->
         <img src="<?php echo $restaurant['image'] ?>" class="w-100 rounded mb-4" alt="Papa John's Hamilton" />
         <h2 class="card-title">
-        <?php echo $restaurant['name'] ?><span class="px-1"></span>
+        <span id="name"><?php echo $restaurant['name'] ?></span><span class="px-1"></span>
           <!-- Link from FontAwesome that is included in the head of our HTML doc that generates an image of a star and/or half a star to indicate a rating on the restaurant -->
             <?php for ($i = 0; $i < $averageRating; $i++) : ?>
                 <i class="fas fa-star"></i>
@@ -55,8 +55,10 @@ require('navbar.php');
         <hr>
         <!-- Added microdata on the longitude and latitude of the restaurant specifically -->
         <p itemprop="geo" itemscope itemtype="https://schema.org/GeoCoordinates">
-          <?php echo $restaurant['address'] ?><br />
-          <?php echo $restaurant['phone_number'] ?>
+          <span id="address"><?php echo $restaurant['address'] ?></span><br />
+          <span id="phone_number"><?php echo $restaurant['phone_number'] ?></span>
+          <span class="d-none" id="latitude"><?php echo $restaurant['latitude'] ?></span>
+          <span class="d-none" id="longitude"><?php echo $restaurant['longitude'] ?></span>
           <!-- Meta tags for the latitude and longitude -->
           <meta itemprop="latitude" content="<?php echo $restaurant['latitude'] ?>" />
           <meta itemprop="longitude" content="<?php echo $restaurant['longitude'] ?>" />
@@ -97,6 +99,13 @@ require('navbar.php');
         </div>
         <?php endforeach; ?>
         </div>
+    </div>
+    <div class="my-4 text-center">
+        <?php if (isset($_SESSION['username'])) : ?>
+            <a href="add_review.php?id=<?php echo $_GET['id']; ?>"><div class="btn btn-lg btn-primary btn-block">Add Review</div></a>
+        <?php else : ?>
+            <h2 class="text-muted">Please sign in to leave a review.</h2>
+        <?php endif; ?>
     </div>
 
 

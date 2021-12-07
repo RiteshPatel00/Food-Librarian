@@ -21,7 +21,11 @@ require('navbar.php');
         <div class="card-body text-primary">
           <!-- Websites' logo that contains a path to the image of the logo in our images folder -->
           <img class="logo mt-3 mb-4" src="images/logo.png" alt="FoodLibrarian" />
-
+          <?php if($_GET['success'] == 'false') : ?>
+            <div class="alert alert-danger" role="alert">
+              There was an error while adding the restaurant.
+            </div>
+          <?php endif; ?>
           <!-- HTML form that has 5 fields, for the restaurant's name, phone number, address and it's longitude and latitude values -->
           <!-- Setting `required` attribute to form groups in order to perform form validation using pure HTML -->
           <form action="php/add_restaurant.php" method="POST" enctype="multipart/form-data">

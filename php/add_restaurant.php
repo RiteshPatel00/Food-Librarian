@@ -8,27 +8,34 @@
     if (!isset($_POST['name'])) {
         //name not given
         header("Location: ../submission.php?success=false");
+        die();
     }
     if (!isset($_POST['phone_number'])) {
         //phone number not given
         header("Location: ../submission.php?success=false");
+        die();
     }
     if (!isset($_POST['address'])) {
         //address not given
         header("Location: ../submission.php?success=false");
+        die();
     }
     if (!isset($_POST['latitude'])) {
         //latitude not given
         header("Location: ../submission.php?success=false");
+        die();
     }
     if (!isset($_POST['longitude'])) {
         //longitude not given
         header("Location: ../submission.php?success=false");
+        die();
     }
     if (!isset($_FILES['image'])) {
         var_dump($_FILES);
         //image not given
         header("Location: ../submission.php?success=false");
+        die();
+        
     }
     try { 
         $s3 = new Aws\S3\S3Client([

@@ -14,20 +14,26 @@
   <!--Creating a Bootstrap row that will be for the search bar-->
   <div class="row justify-content-center mt-5">
     <div class="col-11 col-md-7 col-lg-4 text-center">
-      <form action="results_sample.html" class="d-block">
+      <form action="results.php" class="d-block">
         <div class="input-group mb-3">
             <!--Bootstrap input type that takes in a restaurant name-->
-            <input type="text" class="form-control p-3 bg-light" placeholder="Restaurant Name">
+            <input name="name" type="text" class="form-control p-3 bg-light" placeholder="Restaurant Name">
+            <div class="input-group-append">
+                <select class="form-select py-3" name="rating" aria-label="Rating">
+                    <option value="0" selected>Rating</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
             <!-- Bootstrap button for searching the input -->
             <div class="input-group-append">
                 <!-- Adding button-animation to make fading animation on button -->
                 <button class="btn btn-warning p-3 button-animation" type="submit">Search</button>
             </div>
             <!-- Creating lat and long values class to get user location, keeping it hidden for now -->
-            <div class="input-group-append">
-                <!-- Adding button-animation to make fading animation on button -->
-              <button onClick="getLocation()" class="btn btn-primary p-3 location-button button-animation" type="button"><i class="fas fa-map-marker-alt"></i></button>
-            </div>
             <!-- Hidding the lat and long values as we don't need to show them on our landing page -->
             <input type="hidden" id="latitude" name="latitude"/>
             <input type="hidden" id="longitude" name="longitude"/>

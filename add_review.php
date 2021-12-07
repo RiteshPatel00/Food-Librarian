@@ -2,26 +2,13 @@
 
 <html lang="en" dir="ltr">
 
-<head>
-  <!-- Links to Bootstrap's cs style sheet, js script and a link to our own external style sheet -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <script src="https://kit.fontawesome.com/5982edd98c.js" crossorigin="anonymous"></script>
-  <link href="style.css" rel="stylesheet" />
-
-  <!-- Meta tag for charset -->
-  <meta charset="utf-8">
-
-
-
-  <!-- Meta tags for IOS and Android devices so that the website scales and saving the website to a mobile's homescreen is done intelligently-->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-  <meta name="application-name" content="FoodLibrarian">
-  <meta name="mobile-web-app-capable" content="yes">
-
-  <title>FoodLibrarian</title>
-</head>
+<?php 
+session_start();
+if (!isset($_SESSION['username'])) {
+  header('Location: /sign_in.php');
+}
+require('navbar.php'); 
+?>
 
 <body>
   <!-- Bootstrap row for the user registration -->
@@ -33,28 +20,35 @@
         <div class="card-header font-weight-bold">Add a review</div>
         <div class="card-body text-primary">
           <!-- Websites' logo that contains a path to the image of the logo in our images folder -->
+
           <img class="logo mt-3 mb-4" src="images/logo.png" alt="FoodLibrarian" />
+          <?php if($_GET['success'] == 'false') : ?>
+            <div class="alert alert-danger" role="alert">
+              There was an error while adding your review.
+            </div>
+          <?php endif; ?>
 
           <!-- HTML form that has 4 fields, for the user's email, username, password and confirmation of password  -->
           <!-- Setting id's for each input field in order to perform form validation which returns a function on submit -->
          
-        <form id="myForm">
+        <form id="myForm" action="php/add_review.php" method="POST">
+          <input type="hidden" name="restaurant_id" value="<?php echo $_GET['id']; ?>"/>
           <div class="form-group">
-            <input id="email" type="text" class="form-control mb-3" placeholder="Enter Title">
+            <input id="title" name="title" type="text" class="form-control mb-3" placeholder="Enter Title">
           </div>
 
             <div class="form-group">
-                <textarea class="form-control mb-3" rows="3" placeholder="Description"></textarea>
+                <textarea class="form-control mb-3" rows="3" name="description" placeholder="Description"></textarea>
             </div>
 
             <div class="form-group">
-                <select class="form-select" aria-label="Default select example">
-                    <option selected>Select rating out of 5</option>
+                <select class="form-select" name="rating" aria-label="Default select example">
+                    <option value="0" selected>Select rating out of 5</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
-                    <option value="1">4</option>
-                    <option value="2">5</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
                   </select>
             </div>
 
