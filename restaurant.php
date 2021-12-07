@@ -3,7 +3,27 @@
 <!-- Micro data type included in the beginning to access library -->
 <html lang="en" dir="ltr" itemscope itemtype="http://schema.org/WebPage">
 
-<?php require('navbar.php'); ?>
+<?php 
+require('connect.php');
+if (!isset($_GET['id'])) {
+    die("Restaurant ID not given");
+}
+$sql = "SELECT * FROM restaurants WHERE id=?";
+    try {
+      $restaurants = $db->prepare($sql);
+      $restaurants->execute([$_GET['id']]);
+      $restaurants = $restaurants->fetchAll();
+      if (sizeof($restaurants) == 0) {
+        die("Invalid restaurant ID");
+      } else {
+        $restaurant = $restaurants[0];
+      }
+    } catch (Exception $e) {
+        die("Invalid restaurant ID");
+    }
+
+require('navbar.php'); 
+?>
 
 <body>
 
@@ -15,23 +35,20 @@
       <div class="card-body" itemscope itemtype="https://schema.org/Place">
 
         <!-- Picture of the specific restaurant -->
-        <img src="images/papa-johns.webp" class="w-100 rounded mb-4" alt="Papa John's Hamilton" />
+        <img src="<?php echo $restaurant['image'] ?>" class="w-100 rounded mb-4" alt="Papa John's Hamilton" />
         <h2 class="card-title">
-          Papa John's Pizza<span class="px-1"></span>
+        <?php echo $restaurant['name'] ?><span class="px-1"></span>
           <!-- Link from FontAwesome that is included in the head of our HTML doc that generates an image of a star and/or half a star to indicate a rating on the restaurant -->
           <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half"></i>
         </h2>
-        <p class="card-text">
-          <i>Take-out/delivery chain offering classic & specialty pizzas, wings & breadsticks, plus desserts.</i>
-        </p>
         <hr>
         <!-- Added microdata on the longitude and latitude of the restaurant specifically -->
         <p itemprop="geo" itemscope itemtype="https://schema.org/GeoCoordinates">
-          1212 Upper Wentworth Street, Hamilton ON<br />
-          (905) 524-1441
+          <?php echo $restaurant['address'] ?><br />
+          <?php echo $restaurant['phone_number'] ?>
           <!-- Meta tags for the latitude and longitude -->
-          <meta itemprop="latitude" content="40.75" />
-          <meta itemprop="longitude" content="73.98" />
+          <meta itemprop="latitude" content="<?php echo $restaurant['latitude'] ?>" />
+          <meta itemprop="longitude" content="<?php echo $restaurant['longitude'] ?>" />
         </p>
       </div>
     </div>
