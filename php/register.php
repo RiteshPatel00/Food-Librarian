@@ -1,5 +1,4 @@
 <?php
-    ini_set('display_errors', 1);
   require('../connect.php');
   session_start();
   if ($_SERVER["REQUEST_METHOD"] == "POST") {

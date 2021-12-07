@@ -2,10 +2,16 @@
 
 <html lang="en" dir="ltr">
 
-<?php require('navbar.php'); ?>
+<?php 
+session_start();
+if (!isset($_SESSION['username'])) {
+  header('Location: /sign_in.php');
+}
+require('navbar.php'); 
+?>
 
 <body>
-  
+
   <!-- Bootstrap row for user submission -->
   <div class="row justify-content-center mt-5">
     <div class="col-11 col-md-7 col-lg-4">
@@ -18,25 +24,25 @@
 
           <!-- HTML form that has 5 fields, for the restaurant's name, phone number, address and it's longitude and latitude values -->
           <!-- Setting `required` attribute to form groups in order to perform form validation using pure HTML -->
-          <form>
+          <form action="php/add_restaurant.php" method="POST" enctype="multipart/form-data">
             <div class="form-group">
-              <input type="text" class="form-control mb-3" placeholder="Restaurant name" required>
+              <input type="text" name="name" class="form-control mb-3" placeholder="Restaurant name" required>
             </div>
             <div class="form-group">
-              <input type="tel" class="form-control mb-3" placeholder="Restaurant phone number" pattern="[0-9]{1,50}" required>
+              <input type="tel" name="phone_number" class="form-control mb-3" placeholder="Restaurant phone number" pattern="[0-9]{1,50}" required>
             </div>
             <div class="form-group">
-              <input type="text" class="form-control mb-3" placeholder="Restaurant address" required>
+              <input type="text" name="address" class="form-control mb-3" placeholder="Restaurant address" required>
             </div>
             <div class="input-group">
-              <input type="number" step="any" class="form-control" placeholder="Latitude" id="latitude" required>
-              <input type="number" step="any" class="form-control" placeholder="Longitude" id="longitude" required>
+              <input type="number" name="latitude" step="any" class="form-control" placeholder="Latitude" id="latitude" required>
+              <input type="number" name="longitude" step="any" class="form-control" placeholder="Longitude" id="longitude" required>
               <!-- Adding button-animation to make fading animation on button -->
               <button onClick="getLocation()" class="btn btn-primary p-3 location-button button-animation" type="button"><i class="fas fa-map-marker-alt"></i></button>
             </div>
             <!-- Button to upload an image of the restaurant using an input tag with the type being a file -->
             <div class="form-group mt-3">
-              <b class="text-dark">Image of restaurant: </b><input type="file" class="px-3">
+              <b class="text-dark">Image of restaurant: </b><input type="file" name="image" class="px-3"/>
             </div>
             <!-- Bootstrap button that submits the user's restaurant information -->
             <!-- Adding button-animation to make fading animation on button -->
