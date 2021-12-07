@@ -20,6 +20,10 @@
             <div class="alert alert-danger" role="alert">
               Invalid username or password.
             </div>
+          <?php elseif($_GET['success'] == 'true') : ?>
+            <div class="alert alert-success" role="alert">
+              You have been logged out.
+            </div>
           <?php endif; ?>
 
           <!-- HTML form that has 4 fields, for the user's email, username, password and confirmation of password  -->

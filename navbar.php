@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <head>
   <!-- Links to Bootstrap's cs style sheet, js script and a link to our own external style sheet -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -26,7 +27,7 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
     <!--Contains the branding of the website on the navigation bar-->
     <!-- Also adding in animation class to use to animate the specific HTML language -->
-    <a class="navbar-brand animation" href="search.html">Food Librarian</a>
+    <a class="navbar-brand animation" href="index.php">Food Librarian</a>
     <!--Navigation toggler allows the links on the nav bar to collapse, implemented as a button when the screen size reaches a certain dimension-->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
       <span class="navbar-toggler-icon"></span>
@@ -35,17 +36,28 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <a class="nav-link animation" href="submission.html">Add Restaurant</a>
+          <a class="nav-link animation" href="index.php">Search</a>
+        </li>
+        <?php if (isset($_SESSION['username'])) : ?>
+        <li class="nav-item">
+          <a class="nav-link animation" href="submission.php">Add Restaurant</a>
+        </li>
+        <?php else : ?>
+        <li class="nav-item">
+          <a class="nav-link animation" href="registration.php">Sign Up</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link animation" href="search.html">Search</a>
+          <a class="nav-link animation" href="sign_in.php">Sign In</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link animation" href="registration.html">Sign Up</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link animation" href="sign_in.html">Sign In</a>
-        </li>
+        <?php endif; ?>
       </ul>
     </div>
+    <?php if(isset($_SESSION['username'])) : ?>
+    <div class="nav-username">
+        <i class="fas fa-user-circle"></i> &nbsp;<b><?php echo $_SESSION['username']; ?></b>
+    </div>
+    <div>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="text-muted" href="/php/logout.php">Logout</a>
+    </div>
+    <?php endif; ?>
   </nav>
