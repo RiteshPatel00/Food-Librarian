@@ -4,10 +4,13 @@
 <html lang="en" dir="ltr" itemscope itemtype="http://schema.org/WebPage">
 
 <?php 
+// Require PHP file
 require('connect.php');
+// If restaurant does not have ID then error is given
 if (!isset($_GET['id'])) {
     die("Restaurant ID not given");
 }
+// Selecting the appropriate restaurant based on the id
 $sql = "SELECT * FROM restaurants WHERE id=?";
 try {
     $restaurants = $db->prepare($sql);
@@ -17,8 +20,10 @@ try {
         die("Invalid restaurant ID");
     } else {
       $restaurant = $restaurants[0];
-      $rating = round($restaurant['rating'] * 2) / 2; //round to nearest 0.5
+      // Rounding the rating the nearest 0.5
+      $rating = round($restaurant['rating'] * 2) / 2;
 
+      // Selecting the review for the specific restaurant
       $sql = "SELECT * FROM reviews WHERE restaurant_id=?";
       $reviews = $db->prepare($sql);
       $reviews->execute([$restaurant['id']]);
@@ -27,6 +32,7 @@ try {
 } catch (Exception $e) {
     die("Invalid restaurant ID");
 }
+//Importing the navbar
 require('navbar.php'); 
 ?>
 
@@ -40,10 +46,12 @@ require('navbar.php');
       <div class="card-body" itemscope itemtype="https://schema.org/Place">
 
         <!-- Picture of the specific restaurant -->
+        <!-- Dynamically displaying the image of the restaurant from S3 bucket -->
         <img src="<?php echo $restaurant['image'] ?>" class="w-100 rounded mb-4" alt="Papa John's Hamilton" />
         <h2 class="card-title">
+        <!-- Dynamically displaying the name of the restaurant -->
         <span id="name"><?php echo $restaurant['name'] ?></span><span class="px-1"></span>
-          <!-- Link from FontAwesome that is included in the head of our HTML doc that generates an image of a star and/or half a star to indicate a rating on the restaurant -->
+        <!-- Dynamically displaying the number of stars and half stars based on the rating -->
             <?php for ($i = 0; $i < floor($rating); $i++) : ?>
                 <i class="fas fa-star"></i>
             <?php endfor; ?>
@@ -54,6 +62,7 @@ require('navbar.php');
         <hr>
         <!-- Added microdata on the longitude and latitude of the restaurant specifically -->
         <p itemprop="geo" itemscope itemtype="https://schema.org/GeoCoordinates">
+        <!-- Dynamically displaying the address and phonenumber of the restaurant -->
           <span id="address"><?php echo $restaurant['address'] ?></span><br />
           <span id="phone_number"><?php echo $restaurant['phone_number'] ?></span>
           <span class="d-none" id="latitude"><?php echo $restaurant['latitude'] ?></span>
@@ -72,20 +81,22 @@ require('navbar.php');
     </div>
 
     <!-- ================================================================================================================================================ -->
-    <!--This section contains Bootstrap cards for user reviews and the cards have been repeated 4 times to make the layout of this page, each card is identical in structure, not content, to the rest-->
+    <!--This section contains Bootstrap cards which are dynamically generated using PHP-->
     <!-- ================================================================================================================================================ -->
 
-    <!-- Constructing the specific column and rows using Bootstraps grid system so that it can contain the user reviews -->
+    <!-- Constructing the specific column and rows using Bootstraps grid system so that it can contain the user reviews and dynamically generating each review using PHP-->
     <div class="col-12 col-md-10 col-lg-9 mx-auto mt-4">
       <div class="row row-cols-1 row-cols-md-2 g-4">
+        <!-- Looping through each review for the specific restaurant -->
         <?php foreach ($reviews as $review) : ?>
         <div class="col">
           <!-- Microdata added in this div to grab information about the review -->
           <div class="card" itemprop="review" itemscope itemtype="https://schema.org/Review">
             <div class="card-body">
               <h5 class="card-title">
+                <!-- Dynamically displaying the title of the review -->
                 "<?php echo $review['title']; ?>"<span class="px-1"></span>
-                <!-- Link from FontAwesome that is included in the head of our HTML doc that generates an image of a star and/or half a star to indicate a rating on the restaurant -->
+                <!-- Dynamically displaying the rating as stars on the review -->
                 <?php for ($i = 0; $i < $review['rating']; $i++) : ?>
                     <i class="fas fa-star"></i>
                 <?php endfor; ?> 
@@ -100,8 +111,10 @@ require('navbar.php');
         </div>
     </div>
     <div class="my-4 text-center">
+      <!-- If user is logged in then they can add a review -->
         <?php if (isset($_SESSION['username'])) : ?>
             <a href="add_review.php?id=<?php echo $_GET['id']; ?>"><div class="btn btn-lg btn-primary btn-block">Add Review</div></a>
+            <!-- If user is not logged in then text is dispalyed telling the user to sign in to leave a review -->
         <?php else : ?>
             <h2 class="text-muted">Please sign in to leave a review.</h2>
         <?php endif; ?>
@@ -114,6 +127,7 @@ require('navbar.php');
     &copy; 2021 FoodLibrarian, Inc
   </div>
 
+  <!-- Adding restaruant in a JSON object so that it can be used by our Javascript code -->
   <script>
     var restaurant = <?php echo json_encode($restaurant); ?>;
   </script>

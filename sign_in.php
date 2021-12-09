@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <html lang="en" dir="ltr">
-
+<!-- Require php files  -->
 <?php require('navbar.php'); ?>
 
 <body>
@@ -15,11 +15,12 @@
         <div class="card-body text-primary">
           <!-- Websites' logo that contains a path to the image of the logo in our images folder -->
           <img class="logo mt-3 mb-4" src="images/logo.png" alt="FoodLibrarian" />
-
+          <!-- If validation fails an alert is prompted to tell the user -->
           <?php if($_GET['success'] == 'false') : ?>
             <div class="alert alert-danger" role="alert">
               Invalid username or password.
             </div>
+          <!-- Alert to let user know that they have successfully logged out if previously logged in -->
           <?php elseif($_GET['success'] == 'true') : ?>
             <div class="alert alert-success" role="alert">
               You have been logged out.

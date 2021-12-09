@@ -13,6 +13,7 @@ function initMap() {
     zoom: 12,
   });
 
+  // Looping through JSON file to display all results using it's content
   results.forEach(restaurant => {
     const contentString =
       '<div id="content">' +
@@ -29,7 +30,7 @@ function initMap() {
       content: contentString,
     });
     
-    // Creating our first marker variable to store the API's marker object
+    // Creating our marker variable to store the API's marker object
     restaurant['marker'] = new google.maps.Marker({
       // Setting the marker objects properties to it's desired values
       position: { lat: parseFloat(restaurant['latitude']), lng: parseFloat(restaurant['longitude']) },

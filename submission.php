@@ -3,10 +3,13 @@
 <html lang="en" dir="ltr">
 
 <?php 
+//Starting session
 session_start();
+// If user is not logged in the redirect to sign in page
 if (!isset($_SESSION['username'])) {
   header('Location: /sign_in.php');
 }
+// Importing the navbar
 require('navbar.php'); 
 ?>
 
@@ -21,6 +24,7 @@ require('navbar.php');
         <div class="card-body text-primary">
           <!-- Websites' logo that contains a path to the image of the logo in our images folder -->
           <img class="logo mt-3 mb-4" src="images/logo.png" alt="FoodLibrarian" />
+          <!-- If validation fails for the submission then alert is prompted to user -->
           <?php if($_GET['success'] == 'false') : ?>
             <div class="alert alert-danger" role="alert">
               There was an error while adding the restaurant.

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <html lang="en" dir="ltr">
-
+<!-- Importing the navbar -->
 <?php require('navbar.php'); ?>
 
 <body>
@@ -14,11 +14,13 @@
   <!--Creating a Bootstrap row that will be for the search bar-->
   <div class="row justify-content-center mt-5">
     <div class="col-11 col-md-7 col-lg-4 text-center">
+      <!-- Redirecting to results page when user searches -->
       <form action="results.php" class="d-block">
         <div class="input-group mb-3">
             <!--Bootstrap input type that takes in a restaurant name-->
             <input name="name" type="text" class="form-control p-3 bg-light" placeholder="Restaurant Name">
             <div class="input-group-append">
+              <!-- User can also search restaurants by a minimum rating -->
                 <select class="form-select py-3" name="rating" aria-label="Rating">
                     <option value="0" selected>All Ratings</option>
                     <option value="1">1 Star</option>
@@ -37,6 +39,7 @@
       </form>
       <div class="mx-auto my-4">
         <form action="results.php" class="d-block">
+          <!-- Button to view all restaurants in the database -->
           <button class="btn btn-primary btn-large p-3 button-animation" type="submit">View All Restaurants</button>
         </form>
     </div>

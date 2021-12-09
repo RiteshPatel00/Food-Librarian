@@ -1,5 +1,7 @@
 <?php
+  // Requiring PHP files
   require('connect.php');
+  // Starting the session
   session_start();
   if (isset($_SESSION['username'])) {
     header("Location: index.php");
@@ -9,6 +11,7 @@
 
 <html lang="en" dir="ltr">
 
+<!-- Importing the navbar -->
 <?php require('navbar.php'); ?>
 
 <body>
@@ -26,14 +29,18 @@
           <!-- HTML form that has 4 fields, for the user's email, username, password and confirmation of password  -->
           <!-- Setting id's for each input field in order to perform form validation which returns a function on submit -->
           <?php if($_GET['success'] == 'true') : ?>
+            <!-- Alert that pops up when user successfully creates the account and passes the validation -->
             <div class="alert alert-success" role="alert">
               Account successfully created!
             </div>
+          
           <?php elseif($_GET['success'] == 'false') : ?>
+            <!-- Alert that pops up when user did not successfully create the account -->
             <div class="alert alert-danger" role="alert">
               There was an error creating your account.
             </div>
           <?php endif; ?>
+          <!-- Creating a Bootstrap form and validating the input fields -->
           <form id="myForm" onsubmit="return formValidation(event)" method="POST" action="php/register.php">
             <div class="form-group">
               <input id="userName" name="username" type="text" class="form-control mb-3" placeholder="Enter username">

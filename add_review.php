@@ -2,11 +2,14 @@
 
 <html lang="en" dir="ltr">
 
-<?php 
+<?php
+//Starting the session 
 session_start();
+//Checking to see if user is logged in, if not redirect to sign in page
 if (!isset($_SESSION['username'])) {
   header('Location: /sign_in.php');
 }
+//Importing the navbar 
 require('navbar.php'); 
 ?>
 
@@ -22,26 +25,28 @@ require('navbar.php');
           <!-- Websites' logo that contains a path to the image of the logo in our images folder -->
 
           <img class="logo mt-3 mb-4" src="images/logo.png" alt="FoodLibrarian" />
+          <!-- If there is an error while creating the review, we set an alert -->
           <?php if($_GET['success'] == 'false') : ?>
             <div class="alert alert-danger" role="alert">
               There was an error while adding your review.
             </div>
           <?php endif; ?>
-
-          <!-- HTML form that has 4 fields, for the user's email, username, password and confirmation of password  -->
-          <!-- Setting id's for each input field in order to perform form validation which returns a function on submit -->
-         
+          
+         <!-- Creating a review form using Bootstrap form element -->
         <form id="myForm" action="php/add_review.php" method="POST">
           <input type="hidden" name="restaurant_id" value="<?php echo $_GET['id']; ?>"/>
           <div class="form-group">
+            <!-- Title of rating  -->
             <input id="title" name="title" type="text" class="form-control mb-3" placeholder="Enter Title">
           </div>
 
             <div class="form-group">
+                <!-- Description of rating -->
                 <textarea class="form-control mb-3" rows="3" name="description" placeholder="Description"></textarea>
             </div>
 
             <div class="form-group">
+              <!-- Creating a drop down for user to enter in a rating -->
                 <select class="form-select" name="rating" aria-label="Default select example">
                     <option value="0" selected>Select rating out of 5</option>
                     <option value="1">1</option>

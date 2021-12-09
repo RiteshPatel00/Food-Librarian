@@ -3,55 +3,65 @@
 <html lang="en" dir="ltr">
 
 <?php 
+// Require PHP file
 require('connect.php');
 
+// Compbination serach on name and raing
 if (!empty($_GET['name']) && $_GET['rating'] > 0) {
-    //search by name and rating
+    // Selecting the restaurant based on SQL like operater and the rating being greater than or equal to the given rating
     $sql = "SELECT * FROM restaurants WHERE name LIKE CONCAT('%', :restaurant_name, '%') AND rating >= :rating";
     $stmt = $db->prepare($sql);
     $stmt->execute(['restaurant_name' => $_GET['name'], 'rating' => $_GET['rating']]);
+// Searching by name only
 } elseif (!empty($_GET['name'])) {
-    //search by name
+    // Selecting the restaurant based on SQL like operater
     $sql = "SELECT * FROM restaurants WHERE name LIKE CONCAT('%', :restaurant_name, '%')";
     $stmt = $db->prepare($sql);
     $stmt->execute(['restaurant_name' => $_GET['name']]);
+// Searching by rating only
 } elseif ($_GET['rating'] > 0) {
     //search by rating
     $sql = "SELECT * FROM restaurants WHERE rating >= ?";
     $stmt = $db->prepare($sql);
     $stmt->execute([$_GET['rating']]);
+// Searching all restaurants in the database
 } else {
-    //search all
+    // Selecting all restaurants from the database
     $sql = "SELECT * FROM restaurants";
     $stmt = $db->prepare($sql);
     $stmt->execute();
 }
 
+// Storing the results that are generated from the search
 $results = $stmt->fetchAll();
+// Importing the navbar
 require('navbar.php'); 
 ?>
 
 <body>
 
   <!-- ================================================================================================================================================ -->
-  <!--This section contains Bootstrap cards and the cards have been repeated 8 times to make the layout of this page, each card is identical to the rest-->
+  <!--This section contains Bootstrap cards which are dynamically generated using PHP-->
   <!-- ================================================================================================================================================ -->
 
   <!-- Bootstrap row that will contain a list of restaurants that the user can click on -->
   <div class="row">
     <!-- Encapsulaing the results inside their own container in order to style them later on -->
     <div class="col-12 col-md-6 col-lg-4 p-4 results-container">
+      <!-- If database is empty then display texts telling the user that there are not results -->
       <?php if (sizeof($results) == 0): ?>
         <h3 class="text-center text-muted">No results</h3>
       <?php endif; ?>
+      <!-- Looping through the results and displaying them inside of our contianer -->
       <?php foreach ($results as $result) : ?>
         <div class="card mb-4 bg-light">
           <div class="card-body">
             <h5 class="card-title">
-              <!-- Title of the restaurant -->
+              <!-- Dyanmically generating the title of the restaurant -->
               <a href="restaurant.php?id=<?php echo $result['id']; ?>"><?php echo $result['name']; ?></a><span class="px-1"></span>
+              <!-- Rounding the rating to the nearest 0.5 -->
               <?php $rating = round($result['rating'] * 2) / 2; ?>
-              <!-- Link from FontAwesome that is included in the head of our HTML doc that generates an image of a star and/or half a star to indicate a rating on the restaurant -->
+              <!-- Dyanmically generating the number of stars and half stars for the restaurant rating -->
               <?php for ($i = 0; $i < floor($rating); $i++) : ?>
                   <i class="fas fa-star"></i>
               <?php endfor; ?>
@@ -62,6 +72,7 @@ require('navbar.php');
             <hr>
             <!-- Location information -->
             <p>
+              <!-- Dyanmically generating the address and phone number of the restaurant -->
               <?php echo $result['address']; ?><br />
               <?php echo $result['phone_number']; ?>
             </p>
@@ -85,6 +96,7 @@ require('navbar.php');
     &copy; 2021 FoodLibrarian, Inc
   </div>
 
+  <!-- Adding the results to JSON object to be used by our Javascript to appropriately place the restaurants on the map -->
   <script>
     var results = <?php echo json_encode($results); ?>;
   </script>

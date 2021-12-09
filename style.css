@@ -79,6 +79,7 @@ body, html {
   box-shadow:inset 1000px 0 10px rgba(0,0,0,0.4);
 }
 
+/* Styling font size of user name on the nav bar */
 .nav-username {
   font-size: 22px;
 }

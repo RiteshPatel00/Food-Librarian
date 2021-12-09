@@ -11,6 +11,7 @@ function initMap() {
     zoom: 12,
   });
 
+  // Creating the content of our restauraunt card using PHP restaurant variable from file
   const contentString =
     '<div id="content">' +
     '<div id="siteNotice">' +
@@ -26,7 +27,7 @@ function initMap() {
     content: contentString,
   });
   
-  // Creating our first marker variable to store the API's marker object
+  // Creating our marker variable to store the API's marker object
   restaurant['marker'] = new google.maps.Marker({
     // Setting the marker objects properties to it's desired values
     position: { lat: parseFloat(restaurant['latitude']), lng: parseFloat(restaurant['longitude']) },
