@@ -27,7 +27,7 @@ Mac Email: 2. bhatts39@mcmaster.ca
 
   
 
-URL: https://riteshpatel00.github.io/Food-Librarian/
+URL: https://foodlibrarian.sunnybhatt.me/
 
   
 
@@ -35,30 +35,16 @@ Github URL: https://github.com/RiteshPatel00/Food-Librarian
 
   
 
-## Add-on 1 Completed
+## Added restaurants
 
-Added in animation for 10 seperate HTML elements
+Added in restaurants, restaurants that were added in are as follows:
 
-We created a class for `animation` and `button-animation` which is attached to our specific HTML elements and 
-styling the animation using CSS as follows:
-
-```css
-.animation {
-transition: all  500ms  ease;
-}
-
-.animation:hover {
-transform: scale(1.2);
-}
-
-.button-animation{
-transition: all  500ms  ease;
-}
-
-.button-animation:hover {
-box-shadow:inset  1000px  0  10px  rgba(0,0,0,0.4);
-}
-```
+- Twice The Deal Pizza   
+- Bombay Grill Restaurant   
+- The Burnt Tongue   
+- Alfredo's Place
+- Mucho Burrito     
+- Joe's Pizza
   
 
 ## Specifics about Bootstrap
@@ -76,3 +62,12 @@ is one thing to realize in the classes for a couple of the Bootstrap components.
 We do this within the class since we use multiple card elements and changing the
 
 styling of this through an external css source would mean giving each card it's own name and this method of changing the Bootstrap component directly is much easier.
+
+## Unrated restaurants
+
+Note that when user submits a restaurant, the intial rating is zero until users add reviews to the specific restaurant
+To view unrated restaurants, clicking the  `View All Restaurants` button from the search bar will show all the restaurants including the unrated ones 
+
+## Protection
+
+For SQL injection prevention, all of our database queries were done using PDO parameterized queries when connecting to the database in our `connect.php` file
