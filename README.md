@@ -50,7 +50,6 @@ Added in restaurants, restaurants that were added in are as follows:
 ## Specifics about Bootstrap
 
 We used the Bootstrap framework through-out this project and as such there
-
 is one thing to realize in the classes for a couple of the Bootstrap components. Bootstrap includes a wide range of shorthand css styles for their elements such as `mb` which equivalates to the bottom margin and `bg` which is the background. An example would be the following:
 
 ```html
