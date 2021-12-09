@@ -21,10 +21,10 @@
             <div class="input-group-append">
                 <select class="form-select py-3" name="rating" aria-label="Rating">
                     <option value="0" selected>All Ratings</option>
-                    <option value="1">1 Star</option>
-                    <option value="2">2 Star</option>
-                    <option value="3">3 Star</option>
-                    <option value="4">4 Star</option>
+                    <option value="1">1+ Star</option>
+                    <option value="2">2+ Star</option>
+                    <option value="3">3+ Star</option>
+                    <option value="4">4+ Star</option>
                     <option value="5">5 Star</option>
                 </select>
             </div>
