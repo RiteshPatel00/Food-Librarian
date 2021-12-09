@@ -58,9 +58,7 @@ is one thing to realize in the classes for a couple of the Bootstrap components.
 
 ```
 
-We do this within the class since we use multiple card elements and changing the
-
-styling of this through an external css source would mean giving each card it's own name and this method of changing the Bootstrap component directly is much easier.
+We do this within the class since we use multiple card elements and changing the styling of this through an external css source would mean giving each card it's own name and this method of changing the Bootstrap component directly is much easier.
 
 ## Unrated restaurants
 
