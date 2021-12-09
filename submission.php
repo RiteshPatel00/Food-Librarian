@@ -44,6 +44,7 @@ require('navbar.php');
               <!-- Adding button-animation to make fading animation on button -->
               <button onClick="getLocation()" class="btn btn-primary p-3 location-button button-animation" type="button"><i class="fas fa-map-marker-alt"></i></button>
             </div>
+            <br/>
             <!-- Button to upload an image of the restaurant using an input tag with the type being a file -->
             <div class="form-group mt-3">
               <b class="text-dark">Image of restaurant: </b><input type="file" name="image" class="px-3"/>

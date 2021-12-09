@@ -16,20 +16,16 @@ try {
     if (sizeof($restaurants) == 0) {
         die("Invalid restaurant ID");
     } else {
-    $restaurant = $restaurants[0];
+      $restaurant = $restaurants[0];
+      $rating = round($restaurant['rating'] * 2) / 2; //round to nearest 0.5
+
+      $sql = "SELECT * FROM reviews WHERE restaurant_id=?";
+      $reviews = $db->prepare($sql);
+      $reviews->execute([$restaurant['id']]);
+      $reviews = $reviews->fetchAll();
     }
 } catch (Exception $e) {
     die("Invalid restaurant ID");
-}
-$sql = "SELECT * FROM reviews WHERE restaurant_id=?";
-$reviews = $db->prepare($sql);
-$reviews->execute([$restaurant['id']]);
-$reviews = $reviews->fetchAll();
-if (sizeof($reviews) > 0) {
-    $totalRating = array_reduce($reviews, function($sum, $review) { return $sum += $review['rating']; }, 0);
-    $averageRating = ceil($totalRating)/sizeof($reviews);
-} else {
-    $averageRating = 0;
 }
 require('navbar.php'); 
 ?>
@@ -48,9 +44,12 @@ require('navbar.php');
         <h2 class="card-title">
         <span id="name"><?php echo $restaurant['name'] ?></span><span class="px-1"></span>
           <!-- Link from FontAwesome that is included in the head of our HTML doc that generates an image of a star and/or half a star to indicate a rating on the restaurant -->
-            <?php for ($i = 0; $i < $averageRating; $i++) : ?>
+            <?php for ($i = 0; $i < floor($rating); $i++) : ?>
                 <i class="fas fa-star"></i>
-            <?php endfor; ?> 
+            <?php endfor; ?>
+            <?php if ($rating !== floor($rating)) : ?>
+                <i class="fas fa-star-half"></i>
+            <?php endif; ?> 
         </h2>
         <hr>
         <!-- Added microdata on the longitude and latitude of the restaurant specifically -->
@@ -92,7 +91,7 @@ require('navbar.php');
                 <?php endfor; ?> 
             </h5>
               <!-- Microdata from the review's name and the review body is grabbed as well as the date published -->
-              <p class="card-text text-muted"> <span itemprop="name"><?php echo $review['name']; ?></span>-<span itemprop="datePublished" content="2021-01-08"><?php echo $review['date']; ?></span></p>
+              <p class="card-text text-muted"> <span itemprop="name"><?php echo $review['name']; ?></span>&nbsp; - &nbsp;<span itemprop="datePublished" content="2021-01-08"><?php echo $review['date']; ?></span></p>
               <p class="card-text" itemprop="reviewBody"><?php echo $review['description']; ?></p>
             </div>
           </div>
@@ -115,6 +114,9 @@ require('navbar.php');
     &copy; 2021 FoodLibrarian, Inc
   </div>
 
+  <script>
+    var restaurant = <?php echo json_encode($restaurant); ?>;
+  </script>
   
   <!--Accessory script tags in order to make sure that Bootstrap is working properly-->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -122,7 +124,7 @@ require('navbar.php');
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
   
   <!-- Importing the appropriate javascript for the page -->
-  <script src="js/individual_sample.js"></script>
+  <script src="js/restaurant.js"></script>
   
   <!-- Google Maps API import using script tag -->
   <script async

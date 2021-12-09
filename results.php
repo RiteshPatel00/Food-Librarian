@@ -4,9 +4,30 @@
 
 <?php 
 require('connect.php');
-if (!empty($_GET['name']) && !empty($_GET['rating'])) {
-    $sql = "SELECT * FROM restaurants WHERE"
+
+if (!empty($_GET['name']) && $_GET['rating'] > 0) {
+    //search by name and rating
+    $sql = "SELECT * FROM restaurants WHERE name LIKE CONCAT('%', :restaurant_name, '%') AND rating >= :rating";
+    $stmt = $db->prepare($sql);
+    $stmt->execute(['restaurant_name' => $_GET['name'], 'rating' => $_GET['rating']]);
+} elseif (!empty($_GET['name'])) {
+    //search by name
+    $sql = "SELECT * FROM restaurants WHERE name LIKE CONCAT('%', :restaurant_name, '%')";
+    $stmt = $db->prepare($sql);
+    $stmt->execute(['restaurant_name' => $_GET['name']]);
+} elseif ($_GET['rating'] > 0) {
+    //search by rating
+    $sql = "SELECT * FROM restaurants WHERE rating >= ?";
+    $stmt = $db->prepare($sql);
+    $stmt->execute([$_GET['rating']]);
+} else {
+    //search all
+    $sql = "SELECT * FROM restaurants";
+    $stmt = $db->prepare($sql);
+    $stmt->execute();
 }
+
+$results = $stmt->fetchAll();
 require('navbar.php'); 
 ?>
 
@@ -20,173 +41,33 @@ require('navbar.php');
   <div class="row">
     <!-- Encapsulaing the results inside their own container in order to style them later on -->
     <div class="col-12 col-md-6 col-lg-4 p-4 results-container">
-      <div class="card mb-4 bg-light">
-        <div class="card-body">
-          <h5 class="card-title">
-            <!-- Title of the restaurant -->
-            <a href="individual_sample.html">Papa John's Pizza</a><span class="px-1"></span>
-            <!-- Link from FontAwesome that is included in the head of our HTML doc that generates an image of a star and/or half a star to indicate a rating on the restaurant -->
-            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half"></i>
-          </h5>
-          <p class="card-text">
-            <!-- Summary of what the restaurant offers -->
-            <i>Take-out/delivery chain offering classic & specialty pizzas, wings & breadsticks, plus desserts.</i>
-          </p>
-          <hr>
-          <!-- Location information -->
-          <p>
-            1212 Upper Wentworth Street, Hamilton ON<br />
-            (905) 524-1441
-          </p>
+      <?php if (sizeof($results) == 0): ?>
+        <h3 class="text-center text-muted">No results</h3>
+      <?php endif; ?>
+      <?php foreach ($results as $result) : ?>
+        <div class="card mb-4 bg-light">
+          <div class="card-body">
+            <h5 class="card-title">
+              <!-- Title of the restaurant -->
+              <a href="restaurant.php?id=<?php echo $result['id']; ?>"><?php echo $result['name']; ?></a><span class="px-1"></span>
+              <?php $rating = round($result['rating'] * 2) / 2; ?>
+              <!-- Link from FontAwesome that is included in the head of our HTML doc that generates an image of a star and/or half a star to indicate a rating on the restaurant -->
+              <?php for ($i = 0; $i < floor($rating); $i++) : ?>
+                  <i class="fas fa-star"></i>
+              <?php endfor; ?>
+              <?php if ($rating !== floor($rating)) : ?>
+                  <i class="fas fa-star-half"></i>
+              <?php endif; ?> 
+            </h5>
+            <hr>
+            <!-- Location information -->
+            <p>
+              <?php echo $result['address']; ?><br />
+              <?php echo $result['phone_number']; ?>
+            </p>
+          </div>
         </div>
-      </div>
-
-      <div class="card mb-4 bg-light">
-        <div class="card-body">
-          <h5 class="card-title">
-            <!-- Title of the restaurant -->
-            <a href="individual_sample.html">Papa John's Pizza</a><span class="px-1"></span>
-            <!-- Link from FontAwesome that is included in the head of our HTML doc that generates an image of a star and/or half a star to indicate a rating on the restaurant -->
-            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half"></i>
-          </h5>
-          <p class="card-text">
-            <!-- Summary of what the restaurant offers -->
-            <i>Take-out/delivery chain offering classic & specialty pizzas, wings & breadsticks, plus desserts.</i>
-          </p>
-          <hr>
-          <!-- Location information -->
-          <p>
-            1212 Upper Wentworth Street, Hamilton ON<br />
-            (905) 524-1441
-          </p>
-        </div>
-      </div>
-
-      <div class="card mb-4 bg-light">
-        <div class="card-body">
-          <h5 class="card-title">
-            <!-- Title of the restaurant -->
-            <a href="individual_sample.html">Papa John's Pizza</a><span class="px-1"></span>
-            <!-- Link from FontAwesome that is included in the head of our HTML doc that generates an image of a star and/or half a star to indicate a rating on the restaurant -->
-            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half"></i>
-          </h5>
-          <p class="card-text">
-            <!-- Summary of what the restaurant offers -->
-            <i>Take-out/delivery chain offering classic & specialty pizzas, wings & breadsticks, plus desserts.</i>
-          </p>
-          <hr>
-          <!-- Location information -->
-          <p>
-            1212 Upper Wentworth Street, Hamilton ON<br />
-            (905) 524-1441
-          </p>
-        </div>
-      </div>
-
-      <div class="card mb-4 bg-light">
-        <div class="card-body">
-          <h5 class="card-title">
-            <!-- Title of the restaurant -->
-            <a href="individual_sample.html">Papa John's Pizza</a><span class="px-1"></span>
-            <!-- Link from FontAwesome that is included in the head of our HTML doc that generates an image of a star and/or half a star to indicate a rating on the restaurant -->
-            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half"></i>
-          </h5>
-          <p class="card-text">
-            <!-- Summary of what the restaurant offers -->
-            <i>Take-out/delivery chain offering classic & specialty pizzas, wings & breadsticks, plus desserts.</i>
-          </p>
-          <hr>
-          <!-- Location information -->
-          <p>
-            1212 Upper Wentworth Street, Hamilton ON<br />
-            (905) 524-1441
-          </p>
-        </div>
-      </div>
-
-      <div class="card mb-4 bg-light">
-        <div class="card-body">
-          <h5 class="card-title">
-            <!-- Title of the restaurant -->
-            <a href="individual_sample.html">Papa John's Pizza</a><span class="px-1"></span>
-            <!-- Link from FontAwesome that is included in the head of our HTML doc that generates an image of a star and/or half a star to indicate a rating on the restaurant -->
-            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half"></i>
-          </h5>
-          <p class="card-text">
-            <!-- Summary of what the restaurant offers -->
-            <i>Take-out/delivery chain offering classic & specialty pizzas, wings & breadsticks, plus desserts.</i>
-          </p>
-          <hr>
-          <!-- Location information -->
-          <p>
-            1212 Upper Wentworth Street, Hamilton ON<br />
-            (905) 524-1441
-          </p>
-        </div>
-      </div>
-
-      <div class="card mb-4 bg-light">
-        <div class="card-body">
-          <h5 class="card-title">
-            <!-- Title of the restaurant -->
-            <a href="individual_sample.html">Papa John's Pizza</a><span class="px-1"></span>
-            <!-- Link from FontAwesome that is included in the head of our HTML doc that generates an image of a star and/or half a star to indicate a rating on the restaurant -->
-            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half"></i>
-          </h5>
-          <p class="card-text">
-            <!-- Summary of what the restaurant offers -->
-            <i>Take-out/delivery chain offering classic & specialty pizzas, wings & breadsticks, plus desserts.</i>
-          </p>
-          <hr>
-          <!-- Location information -->
-          <p>
-            1212 Upper Wentworth Street, Hamilton ON<br />
-            (905) 524-1441
-          </p>
-        </div>
-      </div>
-
-      <div class="card mb-4 bg-light">
-        <div class="card-body">
-          <h5 class="card-title">
-            <!-- Title of the restaurant -->
-            <a href="individual_sample.html">Papa John's Pizza</a><span class="px-1"></span>
-            <!-- Link from FontAwesome that is included in the head of our HTML doc that generates an image of a star and/or half a star to indicate a rating on the restaurant -->
-            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half"></i>
-          </h5>
-          <p class="card-text">
-            <!-- Summary of what the restaurant offers -->
-            <i>Take-out/delivery chain offering classic & specialty pizzas, wings & breadsticks, plus desserts.</i>
-          </p>
-          <hr>
-          <!-- Location information -->
-          <p>
-            1212 Upper Wentworth Street, Hamilton ON<br />
-            (905) 524-1441
-          </p>
-        </div>
-      </div>
-
-      <div class="card mb-4 bg-light">
-        <div class="card-body">
-          <h5 class="card-title">
-            <!-- Title of the restaurant -->
-            <a href="individual_sample.html">Papa John's Pizza</a><span class="px-1"></span>
-            <!-- Link from FontAwesome that is included in the head of our HTML doc that generates an image of a star and/or half a star to indicate a rating on the restaurant -->
-            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half"></i>
-          </h5>
-          <p class="card-text">
-            <!-- Summary of what the restaurant offers -->
-            <i>Take-out/delivery chain offering classic & specialty pizzas, wings & breadsticks, plus desserts.</i>
-          </p>
-          <hr>
-          <!-- Location information -->
-          <p>
-            1212 Upper Wentworth Street, Hamilton ON<br />
-            (905) 524-1441
-          </p>
-        </div>
-      </div>
+      <?php endforeach; ?>
     </div>
 
       <!-- ================================================================================================================================================ -->
@@ -204,6 +85,10 @@ require('navbar.php');
     &copy; 2021 FoodLibrarian, Inc
   </div>
 
+  <script>
+    var results = <?php echo json_encode($results); ?>;
+  </script>
+
   <!--Accessory script tags in order to make sure that Bootstrap is working properly-->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
@@ -214,7 +99,7 @@ require('navbar.php');
   </script>
 
   <!-- Importing the appropriate javascript for the page --> 
-  <script src="js/results_sample.js"></script>
+  <script src="js/results.js"></script>
 </body>
 
 </html>

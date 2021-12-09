@@ -20,12 +20,12 @@
             <input name="name" type="text" class="form-control p-3 bg-light" placeholder="Restaurant Name">
             <div class="input-group-append">
                 <select class="form-select py-3" name="rating" aria-label="Rating">
-                    <option value="0" selected>Rating</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
+                    <option value="0" selected>All Ratings</option>
+                    <option value="1">1 Star</option>
+                    <option value="2">2 Star</option>
+                    <option value="3">3 Star</option>
+                    <option value="4">4 Star</option>
+                    <option value="5">5 Star</option>
                 </select>
             </div>
             <!-- Bootstrap button for searching the input -->
@@ -33,12 +33,12 @@
                 <!-- Adding button-animation to make fading animation on button -->
                 <button class="btn btn-warning p-3 button-animation" type="submit">Search</button>
             </div>
-            <!-- Creating lat and long values class to get user location, keeping it hidden for now -->
-            <!-- Hidding the lat and long values as we don't need to show them on our landing page -->
-            <input type="hidden" id="latitude" name="latitude"/>
-            <input type="hidden" id="longitude" name="longitude"/>
           </div>
       </form>
+      <div class="mx-auto my-4">
+        <form action="results.php" class="d-block">
+          <button class="btn btn-primary btn-large p-3 button-animation" type="submit">View All Restaurants</button>
+        </form>
     </div>
   </div>
 

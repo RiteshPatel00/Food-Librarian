@@ -1,5 +1,4 @@
 <?php   
-  ini_set('display_errors', 1);
   require('../connect.php');
   require('../vendor/autoload.php');
   $configs = require('../config.php');
@@ -20,22 +19,20 @@
         header("Location: ../submission.php?success=false");
         die();
     }
-    if (!isset($_POST['latitude'])) {
-        //latitude not given
+    if ($_POST['latitude'] > 90 || $_POST['latitude'] < -90) {
+        //invalid latitude
         header("Location: ../submission.php?success=false");
         die();
     }
-    if (!isset($_POST['longitude'])) {
-        //longitude not given
+    if ($_POST['longitude'] > 180 || $_POST['longitude'] < -180) {
+        //invalid longitude
         header("Location: ../submission.php?success=false");
         die();
     }
-    if (!isset($_FILES['image'])) {
-        var_dump($_FILES);
+    if (sizeof($_FILES['image']['name']) == 0) {
         //image not given
         header("Location: ../submission.php?success=false");
         die();
-        
     }
     try { 
         $s3 = new Aws\S3\S3Client([

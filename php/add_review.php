@@ -1,6 +1,5 @@
 <?php   
   session_start();    
-  ini_set('display_errors', 1);
   require('../connect.php');
 
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -29,10 +28,23 @@
         header("Location: ../add_review.php?success=false&id=" . $_POST['restaurant_id']);
         die();
     }
-
-    $sql = "INSERT INTO reviews (title, name, description, restaurant_id, rating, date) VALUES (?, ?, ?, ?, ?, CURDATE())";
-    try {
+    try {       
+        //add review
+        $sql = "INSERT INTO reviews (title, name, description, restaurant_id, rating, date) VALUES (?, ?, ?, ?, ?, CURDATE())";
         $db->prepare($sql)->execute([$_POST['title'], $_SESSION['username'], $_POST['description'], $_POST['restaurant_id'], $_POST['rating']]);
+        
+        //calculate new rating
+        $sql = "SELECT COUNT(*) as num_reviews, SUM(rating) as sum_ratings FROM reviews WHERE restaurant_id=?";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([$_POST['restaurant_id']]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $newRating = $result['sum_ratings'] / $result['num_reviews'];
+
+        //update restaurant rating
+        $sql = "UPDATE restaurants SET rating=? WHERE id=?";
+        $db->prepare($sql)->execute([$newRating, $_POST['restaurant_id']]);
+
+        //success redirect
         header("Location: ../restaurant.php?id=" . $_POST['restaurant_id']);
     } catch (Exception $e) {
         header("Location: ../add_review.php?success=false");
